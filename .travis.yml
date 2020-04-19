@@ -7,7 +7,7 @@ matrix:
     - os: linux
       python: 2.7
       compiler: gcc
-      env: SOURCES=ubuntu-toolchain-r-test
+      env: SOURCES=ubuntu-toolchain-r-test TEST_SCRIPT=test.py 
       addons:
         apt:
           sources:
@@ -29,7 +29,7 @@ matrix:
     - os: linux
       python: 3.5
       compiler: gcc
-      env: SOURCES=ubuntu-toolchain-r-test
+      env: SOURCES=ubuntu-toolchain-r-test TEST_SCRIPT=test.py
       addons:
         apt:
           sources:
@@ -47,6 +47,44 @@ matrix:
             - libopenmpi-dev
               # python library, development version
             - libpython2.7
+
+    - os: linux
+      python: 2.7
+      compiler: gcc
+      env: SOURCES=ubuntu-toolchain-r-test TEST_SCRIPT=test_openblas.py 
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+             # compilers
+            - g++
+            - gfortran
+            - cmake
+              # math libraries, can not mix with lapack/atlas packages !
+            - libblas-dev
+            - libopenblas-dev
+            # python libraries ...
+            - libpython2.7
+
+    - os: linux
+      python: 3.5
+      compiler: gcc
+      env: SOURCES=ubuntu-toolchain-r-test TEST_SCRIPT=test_openblas.py 
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+             # compilers
+            - g++
+            - gfortran
+            - cmake
+              # math libraries, can not mix with lapack/atlas packages !
+            - libblas-dev
+            - libopenblas-dev
+            # python libraries 
+            #- libpython2.7
 
     - os: osx
       osx_image: xcode11
@@ -76,7 +114,7 @@ script:
   - pycodestyle --ignore E501,E265,E741 autocmake --exclude autocmake/external/docopt.py
     # unit tests
   - py.test -vv autocmake/*
-  - py.test -vv test/test.py
+  - py.test -vv test/$TEST_SCRIPT
 
 notifications:
   email: false

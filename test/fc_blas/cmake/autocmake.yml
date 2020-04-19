@@ -8,8 +8,10 @@ default_build_type: debug
 modules:
 - fc:
   - source: ../../../modules/fc.cmake
-- math:
+- math1:
   - source: ../../../modules/math/blas.cmake
+- math2:
+  - source: ../../../modules/math/openblas.cmake
 - default_build_paths:
   - source: ../../../modules/default_build_paths.cmake
 - src:
