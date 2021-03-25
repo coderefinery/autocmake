@@ -9,7 +9,7 @@ name = "pypi"
 
 pycodestyle = "*"
 pytest = "*"
-PyYAML = "==4.2b4"
+PyYAML = "==5.4"
 
 
 [dev-packages]
