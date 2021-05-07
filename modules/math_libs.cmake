@@ -478,7 +478,8 @@ foreach(_service BLAS LAPACK)
     endif()
 endforeach()
 
-if(MKL_FLAG AND NOT MKL_FLAG STREQUAL "off")
+# allow setting -mkl flags only if a one compiler (Fortran/C/C++) is Intel
+if(MKL_FLAG AND NOT MKL_FLAG STREQUAL "off" AND (CMAKE_Fortran_COMPILER_ID MATCHES Intel OR CMAKE_C_COMPILER_ID MATCHES Intel OR CMAKE_CXX_COMPILER_ID MATCHES Intel))
     set(EXTERNAL_LIBS ${EXTERNAL_LIBS} -mkl=${MKL_FLAG})
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mkl=${MKL_FLAG}")
     message(STATUS "User set explicit MKL flag which is passed to the compiler and linker: -mkl=${MKL_FLAG}")
